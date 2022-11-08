@@ -8,7 +8,7 @@ const dbName = 'user-profile';
 const mongoURI = `mongodb://mongousername:mongopassword@localhost:27017`
 
 //Initialize a mongo client with URI above
-const dbClient = new MongoClient(mongoURI)
+const dbClient = new MongoClient(mongoURI, { useUnifiedTopology: true })
 
 async function dbConnect() {
   try {

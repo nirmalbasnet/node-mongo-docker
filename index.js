@@ -25,9 +25,21 @@ app.get('/', (req, res) => {
 
 app.get('/get-profile', async (req, res) => {
   const userId = 1
-  const user = await dbClient.collection('users').findOne({
+  let user = await dbClient.collection('users').findOne({
     userId
   })
+
+  if (!user) {
+    await dbClient.collection('users').insertOne({
+      userId,
+      name: "Nirmal Basnet",
+      email: "nirmalbasnet@email.com",
+      interests: "Sleeping all day"
+    })
+    user = await dbClient.collection('users').findOne({
+      userId
+    })
+  }
   res.json(user)
 })
 
