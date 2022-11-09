@@ -1,5 +1,6 @@
 //First import mongodb
-import { MongoClient } from 'mongodb'
+import mongodb from 'mongodb'
+
 
 // Database Name
 const dbName = 'user-profile';
@@ -8,7 +9,7 @@ const dbName = 'user-profile';
 const mongoURI = `mongodb://mongousername:mongopassword@localhost:27017`
 
 //Initialize a mongo client with URI above
-const dbClient = new MongoClient(mongoURI, { useUnifiedTopology: true })
+const dbClient = new mongodb.MongoClient(mongoURI, { useUnifiedTopology: true })
 
 async function dbConnect() {
   try {
