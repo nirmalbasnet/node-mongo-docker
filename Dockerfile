@@ -1,7 +1,13 @@
 FROM node:13-alpine
 
-RUN mkdir -p /home/app
+WORKDIR /home/app
 
-COPY ./app /home/app
+COPY ./app/package*.json ./
 
-CMD ["node", "/home/app/index.js"]
+RUN yarn
+
+COPY ./app .
+
+EXPOSE 27017
+
+CMD ["yarn", "dev"]

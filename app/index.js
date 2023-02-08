@@ -52,6 +52,12 @@ app.get('/profile-picture', (req, res) => {
 })
 
 app.patch('/:userId/update-profile', async (req, res) => {
+  await dbClient.collection('users').insertOne({
+    userId: 100,
+    name: "Nirmal Basnet",
+    email: "nirmalbasnet@email.com",
+    interests: "Sleeping all day"
+  })
   const userId = req.params.userId
   const userData = req.body
   const updatedUser = await dbClient.collection('users').findOneAndUpdate({

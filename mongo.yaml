@@ -1,21 +1,40 @@
 version: '3'
 
 services:
-  mongodb:
+  web:
+    container_name: node_web_app
+    image: node-app-from-docker
+    ports:
+      - 3001:3001
+    depends_on:
+      - mongodb_server
+
+  mongodb_server:
+    container_name: mongo_db_container
     image: mongo
     ports:
       - 27017:27017
+    volumes:
+      - mongo-database:/data/db
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=mongousername
-      - MONGO_INITDB_ROOT_PASSWORD=mongopassword
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    restart: always
 
-  mongo-express:
+  mongo_express_server:
+    container_name: mongo_express_container
     image: mongo-express
     ports: 
-      - 8081:8081
+      - 8001:8081
     environment:
-      - ME_CONFIG_MONGODB_ADMINUSERNAME=mongousername
-      - ME_CONFIG_MONGODB_ADMINPASSWORD=mongopassword
-      - ME_CONFIG_MONGODB_SERVER=mongodb
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=password
+      - ME_CONFIG_MONGODB_SERVER=mongodb_server
     depends_on:
-      - mongodb
+      - mongodb_server
+    restart: always
+
+volumes:
+  mongo-database:
+
+
